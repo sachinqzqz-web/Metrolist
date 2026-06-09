@@ -161,19 +161,15 @@ releaseInfo
      * Get the download URL for the correct app variant
      */
     fun getDownloadUrlForCurrentVariant(releaseInfo: ReleaseInfo): String? {
-        val (currentArch, currentVariant) = getCurrentAppVariant()
-        
-        return releaseInfo.assets
-            .find { it.architecture == currentArch && it.variant == currentVariant }
-            ?.downloadUrl
-    }
+    return releaseInfo.downloadUrl
+}
 
     /**
      * Get all available download URLs for a release
      */
     fun getAllDownloadUrls(releaseInfo: ReleaseInfo): Map<String, String> {
-        return releaseInfo.assets.associate { "${it.architecture}-${it.variant}" to it.downloadUrl }
-    }
+    return mapOf("apk" to releaseInfo.downloadUrl)
+}
 
     /**
      * Check if update is needed (respects 2-hour cache)
