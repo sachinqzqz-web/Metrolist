@@ -19,6 +19,7 @@ data class ReleaseInfo(
     val versionName: String,
     val description: String,
     val releaseDate: String,
+    val downloadUrl: String,
     val assets: List<ReleaseAsset>
 )
 
@@ -39,7 +40,7 @@ object Updater {
     private var cachedAllReleases: List<ReleaseInfo> = emptyList()
     
     private const val CHECK_INTERVAL_MILLIS = 2 * 60 * 60 * 1000L // 2 hours
-    private const val GITHUB_API_BASE = "https://api.github.com/repos/MetrolistGroup/Metrolist"
+    private const val GITHUB_API_BASE = "https://animeplex.gamer.gd/api"
 
     /**
      * Compares two version strings.
@@ -128,66 +129,33 @@ object Updater {
                     return@runCatching cachedReleaseInfo!!
                 }
                 
-                val response = client.get("$GITHUB_API_BASE/releases/latest")
+                val response = client.get("$GITHUB_API_BASE/config.php")
                     .bodyAsText()
                 val json = JSONObject(response)
                 
                 val releaseInfo = ReleaseInfo(
-                    tagName = json.getString("tag_name"),
-                    versionName = json.getString("name"),
-                    description = json.getString("body"),
-                    releaseDate = json.getString("published_at"),
-                    assets = parseAssets(json.getJSONArray("assets"))
-                )
-                
-                cachedReleaseInfo = releaseInfo
-                lastCheckTime = System.currentTimeMillis()
-                releaseInfo
+    tagName = json.getString("tag_name"),
+    versionName = json.getString("name"),
+    description = json.getString("body"),
+    releaseDate = json.getString("published_at"),
+    downloadUrl = json.getString("download_url"),
+    assets = emptyList()
+)
+
+cachedReleaseInfo = releaseInfo
+lastCheckTime = System.currentTimeMillis()
+releaseInfo
             }
         }
-
     /**
      * Fetch all releases from GitHub API (paginated)
      */
     suspend fun getAllReleases(forceRefresh: Boolean = false): Result<List<ReleaseInfo>> =
-        withContext(Dispatchers.IO) {
-            runCatching {
-                if (cachedAllReleases.isNotEmpty() && !forceRefresh) {
-                    return@runCatching cachedAllReleases
-                }
-                
-                val releases = mutableListOf<ReleaseInfo>()
-                var page = 1
-                var hasMore = true
-                
-                while (hasMore && page <= 10) { // Limit to 10 pages
-                    val response = client.get("$GITHUB_API_BASE/releases?page=$page&per_page=30")
-                        .bodyAsText()
-                    val json = JSONArray(response)
-                    
-                    if (json.length() == 0) {
-                        hasMore = false
-                        break
-                    }
-                    
-                    for (i in 0 until json.length()) {
-                        val releaseObj = json.getJSONObject(i)
-                        releases.add(ReleaseInfo(
-                            tagName = releaseObj.getString("tag_name"),
-                            versionName = releaseObj.getString("name"),
-                            description = releaseObj.getString("body"),
-                            releaseDate = releaseObj.getString("published_at"),
-                            assets = parseAssets(releaseObj.getJSONArray("assets"))
-                        ))
-                    }
-                    
-                    page++
-                }
-                
-                cachedAllReleases = releases
-                releases
-            }
+    withContext(Dispatchers.IO) {
+        runCatching {
+            emptyList()
         }
+    }
 
     /**
      * Get the download URL for the correct app variant
@@ -244,8 +212,8 @@ object Updater {
      * Returns null if no matching asset is found
      */
     fun getLatestDownloadUrl(): String? {
-        return cachedReleaseInfo?.let { getDownloadUrlForCurrentVariant(it) }
-    }
+    return cachedReleaseInfo?.downloadUrl
+}
     
     /**
      * Get the latest release info (cached)
