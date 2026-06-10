@@ -131,6 +131,9 @@ object Updater {
                 
                 val response = client.get("$GITHUB_API_BASE/config.php")
                     .bodyAsText()
+                    if (!response.trim().startsWith("{")) {
+    throw Exception(response.take(1000))
+}
                 val json = JSONObject(response)
                 
                 val releaseInfo = ReleaseInfo(
