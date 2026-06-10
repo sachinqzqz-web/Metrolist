@@ -20,6 +20,11 @@ data class ReleaseInfo(
     val description: String,
     val releaseDate: String,
     val downloadUrl: String,
+
+    val maintenance: Boolean,
+    val forceUpdate: Boolean,
+    val announcement: String,
+
     val assets: List<ReleaseAsset>
 )
 
@@ -40,7 +45,7 @@ object Updater {
     private var cachedAllReleases: List<ReleaseInfo> = emptyList()
     
     private const val CHECK_INTERVAL_MILLIS = 2 * 60 * 60 * 1000L // 2 hours
-    private const val GITHUB_API_BASE = "https://configjson.vercel.app"
+    private const val GITHUB_API_BASE = "https://ap-update-ten.vercel.app"
 
     /**
      * Compares two version strings.
@@ -141,7 +146,10 @@ object Updater {
     versionName = json.getString("name"),
     description = json.getString("body"),
     releaseDate = json.getString("published_at"),
-    downloadUrl = json.getString("download_url"),
+    downloadUrl = json.optString("download_url", ""),
+    maintenance = json.optBoolean("maintenance", false),
+    forceUpdate = json.optBoolean("force_update", false),
+    announcement = json.optString("announcement", ""),
     assets = emptyList()
 )
 
