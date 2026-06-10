@@ -40,7 +40,7 @@ object Updater {
     private var cachedAllReleases: List<ReleaseInfo> = emptyList()
     
     private const val CHECK_INTERVAL_MILLIS = 2 * 60 * 60 * 1000L // 2 hours
-    private const val GITHUB_API_BASE = "https://animeplex.gamer.gd/api"
+    private const val GITHUB_API_BASE = "https://configjson.vercel.app"
 
     /**
      * Compares two version strings.
@@ -129,7 +129,7 @@ object Updater {
                     return@runCatching cachedReleaseInfo!!
                 }
                 
-                val response = client.get("$GITHUB_API_BASE/config.php")
+                val response = client.get("$GITHUB_API_BASE/config.json")
                     .bodyAsText()
                     if (!response.trim().startsWith("{")) {
     throw Exception(response.take(1000))
