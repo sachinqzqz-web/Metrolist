@@ -504,7 +504,18 @@ class MainActivity : ComponentActivity() {
 
                         Updater.checkForUpdate().onSuccess { (releaseInfo, hasUpdate) ->
                             if (releaseInfo != null) {
-                                onLatestVersionNameChange(releaseInfo.versionName)
+                if (releaseInfo.maintenance) {
+    NotificationManagerCompat.from(this@MainActivity)
+        .notify(
+            9999,
+            NotificationCompat.Builder(this@MainActivity, "updates")
+                .setSmallIcon(R.drawable.update)
+                .setContentTitle("Maintenance Mode")
+                .setContentText(releaseInfo.announcement)
+                .setAutoCancel(true)
+                .build()
+        )
+}                onLatestVersionNameChange(releaseInfo.versionName)
                                 if (hasUpdate && notifEnabled) {
                                     val downloadUrl = Updater.getDownloadUrlForCurrentVariant(releaseInfo)
                                     if (downloadUrl != null) {
