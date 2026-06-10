@@ -103,24 +103,50 @@ private data class CommunityLink(
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 private val leadDeveloper = Contributor(
-    name = "Mo Agamy",
+    name = "Abhishek",
     roleRes = R.string.credits_lead_developer,
     githubHandle = "mostafaalagamy",
+    avatarUrl = "https://animeplex.dpdns.org/icon.png",
     polygon = MaterialShapes.Cookie9Sided,
     favoriteSongVideoId = "Mh2JWGWvy_Y"
 )
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 private val collaborators = listOf(
-    Contributor(name = "Adriel O'Connel", roleRes = R.string.credits_collaborator, githubHandle = "adrielGGmotion", sponsorUrl = "https://github.com/sponsors/adrielGGmotion", polygon = MaterialShapes.Cookie4Sided, favoriteSongVideoId = "m2zUrruKjDQ"),
-    Contributor(name = "Nyx", roleRes = R.string.credits_collaborator, githubHandle = "nyxiereal", sponsorUrl = "https://github.com/sponsors/nyxiereal", polygon = MaterialShapes.Cookie12Sided, favoriteSongVideoId = "zselaN6zPXw"),
+    Contributor(name = "Tinku", roleRes = R.string.credits_collaborator, githubHandle = "Tinku", 
+    avatarUrl = "https://animeplex.dpdns.org/icon2.png", sponsorUrl = "https://www.instagram.com/tinku_kumar_893?igsh=a3JneWhxdGhsazF2", 
+    githubUrl = "https://www.instagram.com/tinku_kumar_893?igsh=a3JneWhxdGhsazF2", polygon = MaterialShapes.Cookie4Sided, favoriteSongVideoId = "m2zUrruKjDQ"),
+    Contributor(
+    name = "AnimePlex",
+    roleRes = R.string.credits_collaborator,
+    githubHandle = "AnimePlex",
+    avatarUrl = "https://animeplex.dpdns.org/icon3.png",
+    sponsorUrl = "https://www.instagram.com/animeplexofficial?igsh=MTR3OWY4NjVqNGhheg==",
+    githubUrl = "https://www.instagram.com/animeplexofficial?igsh=MTR3OWY4NjVqNGhheg==",
+    polygon = MaterialShapes.Cookie12Sided,
+    favoriteSongVideoId = "zselaN6zPXw"
 )
 
 private val communityLinks = listOf(
-    CommunityLink(R.string.credits_discord, R.drawable.discord, "https://discord.com/invite/zrdbeRG2Mt"),
-    CommunityLink(R.string.credits_telegram, R.drawable.telegram, "https://t.me/metrolistapp"),
-    CommunityLink(R.string.credits_view_repo, R.drawable.github, "https://github.com/MetrolistGroup/Metrolist"),
-    CommunityLink(R.string.credits_license_name, R.drawable.info, "https://github.com/MetrolistGroup/Metrolist/blob/main/LICENSE")
+    CommunityLink(
+        R.string.credits_discord,
+        R.drawable.instagram,
+        "https://www.instagram.com/animeplexofficial?igsh=MTR3OWY4NjVqNGhheg=="
+    ),
+    CommunityLink(
+        R.string.credits_telegram,
+        "https://t.me/animeplex_updates"
+    ),
+    CommunityLink(
+        R.string.credits_view_repo,
+        R.drawable.language,
+        "https://animeplex.dpdns.org/?i=1"
+    ),
+    CommunityLink(
+        R.string.credits_license_name,
+        R.drawable.info,
+        "https://apkpure.net/animeplex/animeplex.aplijfl/download"
+    )
 )
 
 private fun handleEasterEggClick(
@@ -191,19 +217,19 @@ private fun DeveloperSocials(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         FilledTonalButton(
-            onClick = { uriHandler.openUri("https://metrolist.cc") },
+            onClick = { uriHandler.openUri("https://animeplex.dpdns.org/") },
             modifier = Modifier.weight(1f).height(48.dp)
         ) {
             Icon(painterResource(R.drawable.language), contentDescription = null)
         }
         FilledTonalButton(
-            onClick = { uriHandler.openUri("https://github.com/mostafaalagamy") },
+            onClick = { uriHandler.openUri("https://abhishek07.dpdns.org") },
             modifier = Modifier.weight(1f).height(48.dp)
         ) {
-            Icon(painterResource(R.drawable.github), contentDescription = null)
+            Icon(painterResource(R.drawable.instagram), contentDescription = null)
         }
         FilledTonalButton(
-            onClick = { uriHandler.openUri("https://www.instagram.com/mostafaalagamy") },
+            onClick = { uriHandler.openUri("https://www.instagram.com/abhi._shek_07?igsh=dWx0eTVqd3VlZDZ5") },
             modifier = Modifier.weight(1f).height(48.dp)
         ) {
             Icon(painterResource(R.drawable.instagram), contentDescription = null)
@@ -390,7 +416,7 @@ fun AboutScreen(
                 Spacer(Modifier.height(16.dp))
                 
                 Button(
-                    onClick = { uriHandler.openUri("https://buymeacoffee.com/mostafaalagamy") },
+                    onClick = { uriHandler.openUri("https://apkpure.net/animeplex/animeplex.aplijfl/download") },
                     modifier = Modifier.fillMaxWidth(),
                     shape = CircleShape,
                     colors = ButtonDefaults.buttonColors(
@@ -400,7 +426,7 @@ fun AboutScreen(
                 ) {
                     Icon(painterResource(R.drawable.buymeacoffee), contentDescription = null, modifier = Modifier.size(20.dp))
                     Spacer(Modifier.width(12.dp))
-                    Text(stringResource(R.string.buy_mo_a_coffee), fontWeight = FontWeight.ExtraBold, fontSize = 16.sp)
+                    Text("Download AnimePlex", fontWeight = FontWeight.ExtraBold, fontSize = 16.sp)
                 }
             }
         }
@@ -434,7 +460,15 @@ fun AboutScreen(
                         )
                     },
                     title = { Text(text = contributor.name, fontWeight = FontWeight.SemiBold) },
-                    description = { Text(stringResource(contributor.roleRes)) },
+                    description = {
+    Text(
+        when (contributor.name) {
+            "Tinku" -> "Admin"
+            "AnimePlex" -> "Official account 😉"
+            else -> stringResource(contributor.roleRes)
+        }
+    )
+},
                     trailingContent = {
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -458,7 +492,7 @@ fun AboutScreen(
                                 }
                             }
                             Icon(
-                                painter = painterResource(R.drawable.github),
+                                painter = painterResource(R.drawable.instagram),
                                 contentDescription = null,
                                 modifier = Modifier.size(24.dp),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
