@@ -125,8 +125,8 @@ private val collaborators = listOf(
     githubUrl = "https://www.instagram.com/animeplexofficial?igsh=MTR3OWY4NjVqNGhheg==",
     polygon = MaterialShapes.Cookie12Sided,
     favoriteSongVideoId = "zselaN6zPXw"
+  )
 )
-
 private val communityLinks = listOf(
     CommunityLink(
         R.string.credits_discord,
