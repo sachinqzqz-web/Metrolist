@@ -134,8 +134,9 @@ private val communityLinks = listOf(
         "https://www.instagram.com/animeplexofficial?igsh=MTR3OWY4NjVqNGhheg=="
     ),
     CommunityLink(
-        R.string.credits_telegram,
-        "https://t.me/animeplex_updates"
+    R.string.credits_telegram,
+    R.drawable.telegram,
+    "https://t.me/animeplex_updates"
     ),
     CommunityLink(
         R.string.credits_view_repo,
